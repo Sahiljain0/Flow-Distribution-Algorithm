@@ -1,0 +1,101 @@
+{
+  "name": "flowed",
+  "version": "1.14.7",
+  "description": "A fast and reliable flow engine for orchestration and more uses in *Node.js*, *Deno* and the browser",
+  "keywords": [
+    "flow",
+    "engine",
+    "task",
+    "dependency",
+    "flowframework",
+    "task-manager",
+    "task-runner",
+    "flowengine",
+    "flow-engine",
+    "flow-execution",
+    "orchestration",
+    "microservices"
+  ],
+  "author": "Daniel Duarte <danieldd.ar@gmail.com> (https://github.com/danielduarte)",
+  "license": "MIT",
+  "homepage": "https://danielduarte.github.io/flowed",
+  "repository": "github:danielduarte/flowed",
+  "scripts": {
+    "build": "tsc",
+    "build:watch": "npm run build -- --watch",
+    "start": "npm test",
+    "test": "nyc mocha --require ts-node/register test/*.ts",
+    "coverage": "nyc report",
+    "coverage:send": "nyc report --reporter=text-lcov | coveralls",
+    "posttest": "npm run lint",
+    "lint": "eslint --ext .js,.jsx,.ts,.tsx .",
+    "lint:fix": "npm run lint -- --fix && prettier --write \"src/**/*.ts\" && prettier --write \"test/**/*.ts\"",
+    "release:prepare": "node ops/updateSonarProps.js && rm -rf ./dist ./node_modules package-lock.json && npm install && npm run lint:fix && npm run build && npm run bundle && npm test && git status",
+    "test:size": "npm-consider install --test",
+    "prebundle": "npm run build",
+    "bundle": "webpack",
+    "postbundle": "node ops/postBundle.js"
+  },
+  "config": {
+    "maxPackagesNumber": 620,
+    "maxSizeBites": 52428800,
+    "allowedLicenseTypes": [
+      "permissive",
+      "publicDomain",
+      "uncategorized"
+    ]
+  },
+  "main": "dist/index.js",
+  "browser": "dist/lib/flowed.js",
+  "files": [
+    "dist"
+  ],
+  "dependencies": {
+    "debug": "^4.3.4",
+    "flowed-st": "^1.0.5"
+  },
+  "devDependencies": {
+    "@istanbuljs/nyc-config-typescript": "^1.0.2",
+    "@types/chai": "^4.3.5",
+    "@types/debug": "^4.1.8",
+    "@types/mocha": "^10.0.1",
+    "@types/node": "^20.4.2",
+    "@typescript-eslint/eslint-plugin": "^5.62.0",
+    "@typescript-eslint/parser": "^5.62.0",
+    "chai": "^4.3.7",
+    "coveralls": "^3.1.1",
+    "eslint": "^8.45.0",
+    "eslint-config-prettier": "^8.8.0",
+    "eslint-plugin-eslint-plugin": "^4.4.1",
+    "eslint-plugin-mocha": "10.1.0",
+    "eslint-plugin-prettier": "^5.0.0",
+    "mocha": "^10.2.0",
+    "nyc": "^15.1.0",
+    "prettier": "^3.0.0",
+    "ts-node": "^10.9.1",
+    "typescript": "^4.9.5",
+    "webpack": "^5.88.1",
+    "webpack-cli": "^5.1.4"
+  },
+  "nyc": {
+    "extends": "@istanbuljs/nyc-config-typescript",
+    "all": true,
+    "exclude": [
+      "test",
+      "ops",
+      "dist",
+      ".eslintrc.js",
+      "webpack.config.js",
+      "web/flowed.js"
+    ],
+    "check-coverage": true,
+    "skip-full": true,
+    "reporter": [
+      "text"
+    ],
+    "branches": 70,
+    "functions": 50,
+    "lines": 85,
+    "statements": 85
+  }
+}
