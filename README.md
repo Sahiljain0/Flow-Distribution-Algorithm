@@ -1,6 +1,3 @@
-<p align="center"><a href="https://github.com/Sahiljain0/Flow-Distribution-Algorithm.git"><img width="445" height="100" src="./doc/flowed-logo.svg" alt="Flowed Logo"></a></p>
-<p align="center">A fast and reliable flow engine for orchestration and more uses in <em>Node.js</em>, <em>Deno</em> and the browser.</p>
-
 
 ## Installation
 
